@@ -31,6 +31,6 @@ Have something you want to build? Go for it!
 
 ## Tips
 - Start with plan mode for anything beyond a simple fix
-- Use `/code-review` in skills-demo to review your changes
+- Use `/code-review` in 02-skills-demo to review your changes
 - Don't forget to run tests: `make test`
 - Ask Claude to explain its changes if something isn't clear

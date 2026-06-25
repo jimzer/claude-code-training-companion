@@ -9,32 +9,24 @@ Companion repository for the Claude Code training session.
 ## Structure
 
 ```
-├── demo-app/              # FastAPI demo application (main demo)
-│   ├── app/               # Application code
-│   ├── tests/             # Test suite
-│   └── CLAUDE.md          # Project context for Claude
+├── demo-app/                 # FastAPI demo application (the substrate we explore)
+│   ├── app/                  # Application code
+│   ├── tests/                # Test suite
+│   └── CLAUDE.md             # Project context for Claude
 │
-├── claude-md-examples/    # CLAUDE.md configuration examples
-│   ├── minimal/           # Bare minimum (5 lines)
-│   ├── standard/          # Good team setup
-│   └── enterprise/        # Full config with rule imports
+│   # Concept stations, in the order we go through them:
+├── 01-claude-md-examples/    # Give Claude context (minimal / standard / enterprise)
+├── 02-skills-demo/           # Reusable instructions (.claude/skills/)
+├── 03-hooks-demo/            # Deterministic automation (.claude/ hooks + scripts)
+├── 04-agents-demo/           # Specialized subagents (.claude/agents/)
 │
-├── skills-demo/           # Custom skills examples
-│   └── .claude/skills/    # 3 example skills
+├── exercises/                # Hands-on exercises (consolidation)
+│   ├── 01-explore.md         # Codebase exploration
+│   ├── 02-plan-mode.md       # Plan mode practice
+│   ├── 03-freestyle.md       # Open challenges
+│   └── 04-piping.md          # CLI & piping tricks
 │
-├── agents-demo/           # Custom agents examples
-│   └── .claude/agents/    # 3 example agents
-│
-├── hooks-demo/            # Hooks configuration examples
-│   └── .claude/           # Hook configs + scripts
-│
-├── exercises/             # Hands-on exercises
-│   ├── 01-explore.md      # Codebase exploration
-│   ├── 02-plan-mode.md    # Plan mode practice
-│   ├── 03-freestyle.md    # Open challenges
-│   └── 04-piping.md       # CLI & piping tricks
-│
-└── cheatsheet.md          # Quick reference card
+└── cheatsheet.md             # Quick reference card
 ```
 
 ## Getting Started

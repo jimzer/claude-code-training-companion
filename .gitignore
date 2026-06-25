@@ -209,4 +209,4 @@ pyrightconfig.json
 
 # Keep the hooks demo's fake .env tracked (it is the protect-files target).
 # Overrides the global .env ignore above. Values are intentionally fake.
-!hooks-demo/.env
+!03-hooks-demo/.env
