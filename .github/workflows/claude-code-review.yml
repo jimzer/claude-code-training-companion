@@ -11,12 +11,6 @@ on:
 
 jobs:
   claude-review:
-    # Optional: Filter by PR author
-    # if: |
-    #   github.event.pull_request.user.login == 'external-contributor' ||
-    #   github.event.pull_request.user.login == 'new-developer' ||
-    #   github.event.pull_request.author_association == 'FIRST_TIME_CONTRIBUTOR'
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -35,9 +29,11 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          plugin_marketplaces: 'https://github.com/anthropics/claude-code.git'
-          plugins: 'code-review@claude-code-plugins'
-          prompt: '/code-review:code-review ${{ github.repository }}/pull/${{ github.event.pull_request.number }}'
-          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
-          # or https://code.claude.com/docs/en/cli-reference for available options
-
+          # Plain-prompt automation mode: Claude posts one summary comment via the
+          # action's built-in GitHub comment tool. Simpler and more reliable than
+          # the inline-comment plugin, whose buffered-comment tools were denied.
+          prompt: |
+            Review the changes in this pull request. Focus on correctness, bugs,
+            and security issues. Post your findings as a single concise PR comment,
+            grouped by severity. Keep it short and skip nitpicks. If you find
+            nothing serious, say so in one line.
