@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+    <style>
+        .task-done { opacity: 0.5; }
+        .task-done h4 { text-decoration: line-through; }
+        .priority-high { border-left: 4px solid #e53935; }
+        .priority-medium { border-left: 4px solid #fb8c00; }
+        .priority-low { border-left: 4px solid #43a047; }
+        .task-card { padding: 1rem; margin-bottom: 0.5rem; border-radius: 8px; background: var(--pico-card-background-color); }
+        .task-header { display: flex; justify-content: space-between; align-items: center; }
+        .task-header h4 { margin: 0; }
+        .task-actions { display: flex; gap: 0.5rem; }
+        .task-actions button { margin: 0; padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+        .task-meta { font-size: 0.8rem; opacity: 0.7; margin-top: 0.25rem; }
+        .filters { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+        .filters select { margin: 0; width: auto; }
+        .stats { display: flex; gap: 2rem; margin-bottom: 1.5rem; }
+        .stat { text-align: center; }
+        .stat strong { display: block; font-size: 1.5rem; }
+        .pagination { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }
+        .pagination button { margin: 0; }
+    </style>
+</head>
+<body>
+    <main class="container" x-data="taskApp()">
+        <hgroup>
+            <h1>Task Manager</h1>
+            <p>FastAPI + Alpine.js demo</p>
+        </hgroup>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <strong x-text="stats.total">0</strong>
+                <small>Total</small>
+            </div>
+            <div class="stat">
+                <strong x-text="stats.pending">0</strong>
+                <small>Pending</small>
+            </div>
+            <div class="stat">
+                <strong x-text="stats.completed">0</strong>
+                <small>Done</small>
+            </div>
+        </div>
+
+        <!-- Add Task Form -->
+        <details open>
+            <summary>Add New Task</summary>
+            <form @submit.prevent="addTask()">
+                <div class="grid">
+                    <label>
+                        Title
+                        <input type="text" x-model="newTask.title" placeholder="What needs to be done?" required>
+                    </label>
+                    <label>
+                        Priority
+                        <select x-model="newTask.priority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </label>
+                </div>
+                <label>
+                    Description
+                    <textarea x-model="newTask.description" placeholder="Optional details..." rows="2"></textarea>
+                </label>
+                <button type="submit" :disabled="!newTask.title">Add Task</button>
+            </form>
+        </details>
+
+        <!-- Filters -->
+        <div class="filters">
+            <label>
+                Filter:
+                <select x-model="filter" @change="currentPage = 1; fetchTasks()">
+                    <option value="all">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </label>
+            <label>
+                Priority:
+                <select x-model="priorityFilter" @change="currentPage = 1; fetchTasks()">
+                    <option value="all">All</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </label>
+        </div>
+
+        <!-- Task List -->
+        <div>
+            <template x-for="task in tasks" :key="task.id">
+                <div class="task-card"
+                     :class="{
+                         'task-done': task.completed,
+                         'priority-high': task.priority === 'high',
+                         'priority-medium': task.priority === 'medium',
+                         'priority-low': task.priority === 'low'
+                     }">
+                    <div class="task-header">
+                        <h4 x-text="task.title"></h4>
+                        <div class="task-actions">
+                            <button x-show="!task.completed"
+                                    class="outline"
+                                    @click="completeTask(task.id)">
+                                Done
+                            </button>
+                            <button class="outline secondary"
+                                    @click="deleteTask(task.id)">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                    <p x-show="task.description" x-text="task.description" style="margin: 0.5rem 0 0;"></p>
+                    <div class="task-meta">
+                        <span x-text="task.priority"></span> &middot;
+                        <span x-text="formatDate(task.created_at)"></span>
+                        <span x-show="task.completed"> &middot; completed</span>
+                    </div>
+                </div>
+            </template>
+            <p x-show="tasks.length === 0" style="text-align:center; opacity:0.6;">
+                No tasks found.
+            </p>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" x-show="pagination.total_pages > 1">
+            <button class="outline" @click="currentPage--; fetchTasks()" :disabled="!pagination.has_previous">Previous</button>
+            <span>Page <strong x-text="pagination.page"></strong> of <strong x-text="pagination.total_pages"></strong></span>
+            <button class="outline" @click="currentPage++; fetchTasks()" :disabled="!pagination.has_next">Next</button>
+        </div>
+
+        <!-- Error display -->
+        <div x-show="error" x-text="error" role="alert" style="color: var(--pico-del-color); margin-top: 1rem;"></div>
+    </main>
+
+    <script>
+        const API = '/tasks';
+
+        function taskApp() {
+            return {
+                tasks: [],
+                filter: 'all',
+                priorityFilter: 'all',
+                currentPage: 1,
+                pageSize: 20,
+                pagination: { page: 1, page_size: 20, total: 0, total_pages: 1, has_next: false, has_previous: false },
+                stats: { total: 0, pending: 0, completed: 0 },
+                error: '',
+                newTask: { title: '', description: '', priority: 'medium' },
+
+                async init() {
+                    await this.fetchTasks();
+                },
+
+                async fetchTasks() {
+                    try {
+                        const params = new URLSearchParams({
+                            page: this.currentPage,
+                            page_size: this.pageSize,
+                        });
+                        if (this.filter !== 'all') params.set('status', this.filter);
+                        if (this.priorityFilter !== 'all') params.set('priority', this.priorityFilter);
+
+                        const res = await fetch(`${API}/?${params}`);
+                        const data = await res.json();
+                        this.tasks = data.items;
+                        this.pagination = data.pagination;
+                        this.stats = data.stats;
+                        this.currentPage = data.pagination.page;
+                        this.error = '';
+                    } catch (e) {
+                        this.error = 'Failed to load tasks';
+                    }
+                },
+
+                async addTask() {
+                    try {
+                        const res = await fetch(API + '/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.newTask),
+                        });
+                        if (!res.ok) throw new Error('Failed to create task');
+                        this.newTask = { title: '', description: '', priority: 'medium' };
+                        this.currentPage = 1;
+                        await this.fetchTasks();
+                    } catch (e) {
+                        this.error = e.message;
+                    }
+                },
+
+                async completeTask(id) {
+                    try {
+                        await fetch(`${API}/${id}/complete`, { method: 'POST' });
+                        await this.fetchTasks();
+                        if (this.tasks.length === 0 && this.currentPage > 1) {
+                            this.currentPage--;
+                            await this.fetchTasks();
+                        }
+                    } catch (e) {
+                        this.error = 'Failed to complete task';
+                    }
+                },
+
+                async deleteTask(id) {
+                    try {
+                        await fetch(`${API}/${id}`, { method: 'DELETE' });
+                        await this.fetchTasks();
+                        if (this.tasks.length === 0 && this.currentPage > 1) {
+                            this.currentPage--;
+                            await this.fetchTasks();
+                        }
+                    } catch (e) {
+                        this.error = 'Failed to delete task';
+                    }
+                },
+
+                formatDate(iso) {
+                    if (!iso) return '';
+                    const d = new Date(iso);
+                    return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                }
+            };
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uvx ruff format . 2>/dev/null || true",
+            "description": "Auto-format Python files after edit"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/protect-files.sh",
+            "description": "Block access to sensitive files like .env"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uvx ruff check . 2>/dev/null || true",
+            "description": "Run linter before session ends"
+          }
+        ]
+      }
+    ]
+  }
+}
