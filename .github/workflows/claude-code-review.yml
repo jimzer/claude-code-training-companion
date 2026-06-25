@@ -29,6 +29,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          track_progress: true
           # Plain-prompt automation mode: Claude posts one summary comment via the
           # action's built-in GitHub comment tool. Simpler and more reliable than
           # the inline-comment plugin, whose buffered-comment tools were denied.
