@@ -20,9 +20,9 @@ def get_user(db, user_id):
     return db.execute(query)
 
 
-def ping(host):
-    # New in this PR: ping a host and return the raw output.
+def ping(host, count=1):
+    # New in this PR: ping a host `count` times and return the raw output.
     # Deliberate bug: command injection (unsanitized input into a shell).
     import os
 
-    return os.popen("ping -c 1 " + host).read()
+    return os.popen("ping -c " + str(count) + " " + host).read()
