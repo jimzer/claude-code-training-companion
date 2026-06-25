@@ -3,12 +3,11 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+    # Scoped to the GitHub-integration station so the auto-review stays quiet on
+    # the rest of the repo. Open a PR touching this folder to trigger a review;
+    # PRs elsewhere are skipped (no job, no usage spent).
+    paths:
+      - '05-github-integration/**'
 
 jobs:
   claude-review:
