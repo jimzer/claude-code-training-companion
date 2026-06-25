@@ -1,10 +1,6 @@
 # Claude Code Formation
 
-Companion repository for the Claude Code training session.
-
-**Date:** March 5, 2026
-**Duration:** 3 hours
-**Audience:** Precitrame Machine SA / EMP SA development teams
+Companion repository for the Claude Code training.
 
 ## Structure
 
@@ -19,6 +15,7 @@ Companion repository for the Claude Code training session.
 ├── 02-skills-demo/           # Reusable instructions (.claude/skills/)
 ├── 03-hooks-demo/            # Deterministic automation (.claude/ hooks + scripts)
 ├── 04-agents-demo/           # Specialized subagents (.claude/agents/)
+├── 05-github-integration/    # @claude on PRs, auto-review, web (.github/workflows/)
 │
 ├── exercises/                # Hands-on exercises (consolidation)
 │   ├── 01-explore.md         # Codebase exploration
