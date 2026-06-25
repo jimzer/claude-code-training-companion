@@ -42,8 +42,8 @@ claude --model opus        # Choose model
 - Language, framework, database
 
 ## Commands
-- `make test` -- how to run tests
-- `make lint` -- how to lint
+- `make test`: how to run tests
+- `make lint`: how to lint
 
 ## Conventions
 - Key rules Claude should follow

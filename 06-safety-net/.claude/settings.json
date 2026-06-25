@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/safety-net.sh",
+            "description": "Block finishing the turn until format + lint + types + tests pass"
+          }
+        ]
+      }
+    ]
+  }
+}

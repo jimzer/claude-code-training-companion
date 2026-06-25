@@ -35,4 +35,4 @@ Use Claude Code to understand the demo-app without reading a single file yoursel
 - It identifies missing test coverage
 
 ## Bonus
-- Ask Claude to compare task_service.py vs user_service.py -- what's different about their timestamp handling?
+- Ask Claude to compare task_service.py vs user_service.py. What's different about their timestamp handling?

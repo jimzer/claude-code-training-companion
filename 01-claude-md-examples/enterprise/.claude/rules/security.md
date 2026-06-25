@@ -16,7 +16,7 @@ paths:
 ## Data Handling
 - Never log PII (emails, names, SSNs, etc.)
 - Sanitize all user input before processing
-- Use parameterized queries -- never string concatenation for SQL
+- Use parameterized queries, never string concatenation for SQL
 - Encrypt sensitive fields at rest using `libs/crypto`
 
 ## Secrets

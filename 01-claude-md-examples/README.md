@@ -1,4 +1,4 @@
-# 01 — CLAUDE.md examples
+# 01 - CLAUDE.md examples
 
 **Goal:** see how project context scales from a 5-line file to a full enterprise setup, and how path-scoped rules work.
 

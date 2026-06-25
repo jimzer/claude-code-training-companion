@@ -32,11 +32,11 @@ You analyze code and suggest (or implement) refactoring improvements. You run in
 
 ## Output format
 For each suggestion:
-\`\`\`
+```
 ### Refactor: [Title]
 - **Where**: file:line_range
 - **What**: Current pattern description
 - **Why**: Why this is problematic
 - **How**: Specific refactoring steps
 - **Impact**: Low/Medium/High
-\`\`\`
+```

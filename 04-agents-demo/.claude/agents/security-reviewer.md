@@ -31,11 +31,11 @@ You are a security-focused code reviewer. Your job is to find security vulnerabi
 
 ## Output format
 For each finding:
-\`\`\`
+```
 ### [SEVERITY] Finding Title
 - **File**: path/to/file.py:line
 - **Issue**: Description
 - **Fix**: Recommended remediation
-\`\`\`
+```
 
 Summarize with counts by severity at the end.

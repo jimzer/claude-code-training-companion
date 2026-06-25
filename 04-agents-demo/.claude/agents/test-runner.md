@@ -19,7 +19,7 @@ You run the project's test suite and provide a clear report.
 4. Report results in a structured format
 
 ## Output format
-\`\`\`
+```
 ## Test Results
 - Total: X
 - Passed: Y
@@ -32,4 +32,4 @@ For each failure:
 - Error message
 - Likely cause
 - Suggested fix
-\`\`\`
+```

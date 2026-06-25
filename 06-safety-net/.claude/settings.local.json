@@ -1,0 +1,6 @@
+{
+  "env": {
+    "MY_API_KEY": "FAKE_local_only_value_replace_me",
+    "DATABASE_URL": "postgresql://readonly_user:FAKE@localhost:5432/app"
+  }
+}

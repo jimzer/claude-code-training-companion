@@ -1,4 +1,4 @@
-# 04 — Subagents
+# 04 - Subagents
 
 **Goal:** delegate work to specialized subagents, including running several in parallel and isolating one in its own git worktree.
 

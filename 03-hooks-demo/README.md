@@ -1,4 +1,4 @@
-# 03 — Hooks
+# 03 - Hooks
 
 **Goal:** use hooks to enforce deterministic actions on lifecycle events, things that should always happen, not things the model decides to do.
 

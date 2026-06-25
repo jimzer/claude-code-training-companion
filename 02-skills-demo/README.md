@@ -1,4 +1,4 @@
-# 02 — Skills
+# 02 - Skills
 
 **Goal:** build and use custom skills, both the kind Claude triggers on its own and the kind you call like a slash command.
 

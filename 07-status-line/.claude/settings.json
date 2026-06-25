@@ -1,0 +1,7 @@
+{
+  "//": "Point Claude Code at the status line script. Use an absolute path when you install it globally in ~/.claude/settings.json. The relative path below works when Claude is launched from this station folder.",
+  "statusLine": {
+    "type": "command",
+    "command": "sh 07-status-line/statusline.sh"
+  }
+}

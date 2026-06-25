@@ -16,7 +16,12 @@ Companion repository for the Claude Code training.
 ├── 03-hooks-demo/            # Deterministic automation (.claude/ hooks + scripts)
 ├── 04-agents-demo/           # Specialized subagents (.claude/agents/)
 ├── 05-github-integration/    # @claude on PRs, auto-review, web (.github/workflows/)
+├── 06-safety-net/            # Automatic verification gate (format+lint+types+tests+hook)
+├── 07-status-line/           # Status line + model/effort/cost awareness
+├── 08-power-recipes/         # Generate artifacts (HTML dashboards, reports, tests, decks)
+├── 09-advanced/              # Headless + advanced topics (scaffold)
 │
+├── governance/               # Company adoption playbook (privacy, allowed skills, secrets)
 ├── exercises/                # Hands-on exercises (consolidation)
 │   ├── 01-explore.md         # Codebase exploration
 │   ├── 02-plan-mode.md       # Plan mode practice
@@ -58,18 +63,18 @@ The centerpiece is a **Task Manager API** built with FastAPI. It has:
 - Partial test coverage
 
 ### Intentional Demo Opportunities
-1. **Timezone bug** -- `task_service.py` uses naive `datetime.now()` instead of UTC
-2. **No pagination** -- List endpoints return all records
-3. **Missing tests** -- User service has no tests
-4. **Lint issues** -- Some inconsistent formatting
+1. **Timezone bug**: `task_service.py` uses naive `datetime.now()` instead of UTC
+2. **No pagination**: List endpoints return all records
+3. **Missing tests**: User service has no tests
+4. **Lint issues**: Some inconsistent formatting
 
 ## Session Outline
 
-1. **Introduction** -- What is Claude Code, how it works
-2. **Live Demo** -- Exploring code, finding bugs, plan mode
-3. **Hands-On Workshop** -- Exercises 1-4
-4. **Customization** -- CLAUDE.md, Skills, Agents, Hooks
-5. **Advanced Patterns** -- Subagents, worktrees, scaling
+1. **Introduction**: What is Claude Code, how it works
+2. **Live Demo**: Exploring code, finding bugs, plan mode
+3. **Hands-On Workshop**: Exercises 1-4
+4. **Customization**: CLAUDE.md, Skills, Agents, Hooks
+5. **Advanced Patterns**: Subagents, worktrees, scaling
 6. **Best Practices & Wrap-Up**
 
 ## Resources

@@ -1,0 +1,22 @@
+# Example CI gate. The SAME `make check` that the Stop hook runs locally also
+# guards every PR. Copy this to `.github/workflows/ci.yml` at the repo root to
+# activate it (it is named .example here so it does not run inside the course repo).
+
+name: CI gate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Run the safety net
+        working-directory: 06-safety-net
+        run: |
+          uv sync
+          make check

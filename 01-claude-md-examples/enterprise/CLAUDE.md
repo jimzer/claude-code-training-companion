@@ -16,22 +16,22 @@ Large-scale microservices platform for financial data processing.
 - CI/CD: GitHub Actions
 
 ## Commands
-- `make dev` -- Start local dev environment (docker-compose)
-- `make test` -- Run full test suite
-- `make test-unit` -- Unit tests only
-- `make test-integration` -- Integration tests (requires Docker)
-- `make lint` -- Run all linters
-- `make typecheck` -- Run mypy strict mode
-- `make migrate` -- Run Alembic migrations
-- `make proto` -- Generate protobuf stubs
+- `make dev`: Start local dev environment (docker-compose)
+- `make test`: Run full test suite
+- `make test-unit`: Unit tests only
+- `make test-integration`: Integration tests (requires Docker)
+- `make lint`: Run all linters
+- `make typecheck`: Run mypy strict mode
+- `make migrate`: Run Alembic migrations
+- `make proto`: Generate protobuf stubs
 
 ## Architecture
-- `services/` -- Individual microservices
+- `services/`: Individual microservices
   - Each service has its own `Dockerfile`, `pyproject.toml`, and `tests/`
-- `libs/` -- Shared libraries (auth, logging, telemetry)
-- `proto/` -- Protobuf definitions
-- `infra/` -- Terraform modules
-- `scripts/` -- CI/CD and deployment scripts
+- `libs/`: Shared libraries (auth, logging, telemetry)
+- `proto/`: Protobuf definitions
+- `infra/`: Terraform modules
+- `scripts/`: CI/CD and deployment scripts
 
 ## Conventions
 - All services follow hexagonal architecture
