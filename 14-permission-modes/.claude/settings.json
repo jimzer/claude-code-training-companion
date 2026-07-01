@@ -1,0 +1,6 @@
+{
+  "//": "defaultMode sets the permission mode Claude starts in when launched from this folder. 'default' is Normal, so the station opens by prompting before each new tool. Change it to acceptEdits, plan, auto, or dontAsk to start elsewhere.",
+  "permissions": {
+    "defaultMode": "default"
+  }
+}

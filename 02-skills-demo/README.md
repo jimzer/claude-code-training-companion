@@ -11,6 +11,7 @@
   - `api-conventions/` : auto-triggers when editing API files (`paths:` scoped).
   - `code-review/` : user-invocable as `/code-review`.
   - `test-writer/` : user-invocable as `/test-writer`, with an `examples/` file that shapes its output.
+- `builtin/` : the skills that ship with Claude Code (`/code-review`, `/run`, `/verify`, and more), separate from the custom ones above.
 
 ## Try it
 

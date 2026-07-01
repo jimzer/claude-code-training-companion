@@ -22,6 +22,7 @@ See `prompts.md` for the exact prompts. Each produces a real file.
 2. **Rich report / one-pager.** Turn raw notes or query results into a styled, shareable HTML or Markdown document instead of a wall of text.
 3. **Test generation.** Point at an untested module and ask for a full pytest suite (this is also how you grow the safety net from station `06`).
 4. **Slide deck.** Generate a presentation from an outline. This very training's slides are built exactly this way, as TSX rendered to PDF.
+5. **Piping & CLI integration.** Claude reads stdin and runs non-interactively with `-p`, so it drops into any pipeline (`git diff | claude "review this"`). See `piping.md`.
 
 ## Try it
 

@@ -215,3 +215,7 @@ pyrightconfig.json
 # secrets-injection pattern). Overrides the .claude/settings.local.json ignore
 # above. Values are intentionally fake.
 !06-safety-net/.claude/settings.local.json
+
+# Keep the permission-modes station's fake .env tracked (it is the protect-files
+# target Claude must be blocked from reading). Values are intentionally fake.
+!14-permission-modes/protected-files/.env

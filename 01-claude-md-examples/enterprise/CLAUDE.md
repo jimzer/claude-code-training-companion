@@ -33,6 +33,14 @@ Large-scale microservices platform for financial data processing.
 - `infra/`: Terraform modules
 - `scripts/`: CI/CD and deployment scripts
 
+## Documentation
+For these frameworks, do not browse the web. Clone the docs locally once and read them from disk (faster, exact version, works offline):
+- FastAPI: `git clone --depth 1 https://github.com/fastapi/fastapi /tmp/fastapi`
+- SQLAlchemy: `git clone --depth 1 https://github.com/sqlalchemy/sqlalchemy /tmp/sqlalchemy`
+- TanStack Router/Query: `git clone --depth 1 https://github.com/TanStack/router /tmp/tanstack-router`
+
+Read the `docs/` and source under `/tmp/<lib>` instead of fetching pages online. Reuse the clone if it already exists.
+
 ## Conventions
 - All services follow hexagonal architecture
 - Domain logic must never import from infrastructure layer

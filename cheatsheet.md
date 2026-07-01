@@ -15,11 +15,19 @@
 
 ## Permission Modes
 
+Cycle with `Shift+Tab`, or set at launch with `--permission-mode <mode>`.
+
 | Mode | Description |
 |------|-------------|
 | **default** | Asks before edits and commands (default) |
 | **acceptEdits** | Auto-accepts file edits, still asks for commands |
 | **plan** | Read-only: proposes a plan, makes no changes |
+| **auto** | Auto-accepts edits and commands |
+| **bypass** | bypassPermissions: no prompts at all (use with care) |
+
+```bash
+claude --permission-mode plan
+```
 
 ## CLI Flags
 
@@ -93,6 +101,44 @@ tools:                        # Optional: omit to inherit all tools
     "Stop": [...]            // When session ends
   }
 }
+```
+
+## MCP (external tools)
+
+```bash
+claude mcp add <name> -- <command>   # Register an MCP server
+claude mcp list                      # List configured servers
+```
+
+> `/mcp` in-session shows connected servers and their tools.
+
+## Plugins
+
+```bash
+/plugin marketplace add <repo-or-url>   # Add a marketplace
+/plugin install <name>@<market>         # Install a plugin (skills + commands + hooks + MCP)
+```
+
+> A plugin packages skills, commands, hooks, and MCP servers into one installable unit.
+
+## Context Window
+
+| Command | Action |
+|---------|--------|
+| `/clear` | Start fresh, drop the conversation |
+| `/compact` | Summarize the conversation to reclaim context |
+| `/context` | Show current context usage |
+
+> Offload heavy work to subagents to keep the main context lean.
+
+## Scaling
+
+```bash
+claude --worktree           # Run in an isolated git worktree
+claude agents               # Manage agents / agent teams
+/goal                       # Set a goal the session works toward
+/loop                       # Repeat a prompt or command on a schedule
+/bg                         # Send the current task to the background
 ```
 
 ## Key Patterns

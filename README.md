@@ -8,7 +8,12 @@ Companion repository for the Claude Code training.
 ├── demo-app/                 # FastAPI demo application (the substrate we explore)
 │   ├── app/                  # Application code
 │   ├── tests/                # Test suite
-│   └── CLAUDE.md             # Project context for Claude
+│   ├── CLAUDE.md             # Project context for Claude
+│   └── exercises/            # Hands-on exercises, run against the demo app
+│       ├── 01-explore.md     # Codebase exploration
+│       ├── 02-plan-mode.md   # Plan mode practice
+│       ├── 03-freestyle.md   # Open challenges
+│       └── 05-spec.md        # Spec-first prompting
 │
 │   # Concept stations, in the order we go through them:
 ├── 01-claude-md-examples/    # Give Claude context (minimal / standard / enterprise)
@@ -18,15 +23,15 @@ Companion repository for the Claude Code training.
 ├── 05-github-integration/    # @claude on PRs, auto-review, web (.github/workflows/)
 ├── 06-safety-net/            # Automatic verification gate (format+lint+types+tests+hook)
 ├── 07-status-line/           # Status line + model/effort/cost awareness
-├── 08-power-recipes/         # Generate artifacts (HTML dashboards, reports, tests, decks)
+├── 08-power-recipes/         # Generate artifacts (HTML dashboards, reports, tests, decks) + piping
 ├── 09-advanced/              # Headless + advanced topics (scaffold)
+├── 10-mcp/                   # Model Context Protocol - add external tools
+├── 11-plugins/               # Package skills+commands+hooks+MCP, install via marketplace
+├── 12-context/               # Context window: /clear, /compact, /context, subagents
+├── 13-scaling/               # worktrees, goals, scheduled, workflows, agent-view, agent-teams (one subfolder each)
+├── 14-permission-modes/      # The Shift+Tab modes: default/acceptEdits/plan/auto/bypass
 │
 ├── governance/               # Company adoption playbook (privacy, allowed skills, secrets)
-├── exercises/                # Hands-on exercises (consolidation)
-│   ├── 01-explore.md         # Codebase exploration
-│   ├── 02-plan-mode.md       # Plan mode practice
-│   ├── 03-freestyle.md       # Open challenges
-│   └── 04-piping.md          # CLI & piping tricks
 │
 └── cheatsheet.md             # Quick reference card
 ```

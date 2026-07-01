@@ -1,11 +1,10 @@
-# Exercise 4: Piping & CLI Integration
+# Recipe: Piping & CLI integration
 
-**Time:** 10 minutes
+Claude Code is a Unix citizen: it reads stdin and runs non-interactively with
+`-p`, so you can drop it into any pipeline. This is the fastest "powerup" to reach
+for: quick, one-off analysis without opening a session.
 
-## Goal
-Use Claude Code's piping capabilities and CLI flags for quick, targeted tasks.
-
-## Exercises
+## Recipes
 
 ### 1. Code Review via Pipe
 ```bash
