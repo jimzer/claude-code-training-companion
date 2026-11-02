@@ -7,7 +7,7 @@
           {
             "type": "command",
             "command": "echo '[my-first-plugin] file changed' ",
-            "description": "demo hook from a plugin"
+            "statusMessage": "demo hook from a plugin"
           }
         ]
       }

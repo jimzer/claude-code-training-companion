@@ -5,7 +5,6 @@ tools:
   - Read
   - Glob
   - Grep
-  - Agent
   - Edit
   - Write
   - Bash

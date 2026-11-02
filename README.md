@@ -39,7 +39,7 @@ Companion repository for the Claude Code training.
 ## Getting Started
 
 ### Prerequisites
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) installed
+- [Claude Code](https://code.claude.com/docs/en/overview) installed
 - [uv](https://docs.astral.sh/uv/) installed (Python package manager)
 - Python 3.11+
 
@@ -83,6 +83,6 @@ The centerpiece is a **Task Manager API** built with FastAPI. It has:
 6. **Best Practices & Wrap-Up**
 
 ## Resources
-- [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
+- [Claude Code Documentation](https://code.claude.com/docs/en/overview)
 - [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook)
 - See `cheatsheet.md` for quick reference

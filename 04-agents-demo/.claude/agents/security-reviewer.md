@@ -6,7 +6,6 @@ tools:
   - Read
   - Glob
   - Grep
-  - Agent
 ---
 
 # Security Reviewer Agent

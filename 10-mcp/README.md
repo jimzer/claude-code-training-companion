@@ -2,7 +2,7 @@
 
 **Goal:** connect Claude Code to an external tool server over MCP, so the model can call tools you bring instead of just the built-ins.
 
-**Concept:** MCP is an open protocol for exposing tools, resources, and prompts to an AI client. Claude Code is the client; an MCP server is a separate process (local stdio command or remote HTTP endpoint) that advertises capabilities. A server exposes tools (Claude calls them), resources (you @-mention them), and prompts (they show up as `/mcp__server__name` slash commands). This station runs the official filesystem server fully offline, no account needed.
+**Concept:** MCP is an open protocol for exposing tools, resources, and prompts to an AI client. Claude Code is the client; an MCP server is a separate process (local stdio command or remote HTTP endpoint) that advertises capabilities. A server exposes tools (Claude calls them), resources (you @-mention them), and prompts (they show up as `/servername:promptname (MCP)` slash commands). This station runs the official filesystem server fully offline, no account needed.
 
 ## What's in here
 
