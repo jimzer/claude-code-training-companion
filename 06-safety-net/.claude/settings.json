@@ -6,7 +6,7 @@
           {
             "type": "command",
             "command": "bash .claude/hooks/safety-net.sh",
-            "description": "Block finishing the turn until format + lint + types + tests pass"
+            "statusMessage": "Block finishing the turn until format + lint + types + tests pass"
           }
         ]
       }
