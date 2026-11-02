@@ -1,0 +1,144 @@
+Feature branch: lister les taches d'un utilisateur, et en completer plusieurs
+d'un coup.
+
+Ce que la branche annonce faire :
+  - GET /tasks/by-user/{user_id}  liste paginee des taches d'un utilisateur,
+    filtrable par statut (pending ou completed)
+  - POST /tasks/bulk-complete     marque comme terminees plusieurs taches
+    d'un utilisateur, et renvoie combien ont change
+
+Les 13 tests existants passent. Le linter ne signale rien de nouveau.
+
+diff --git a/app/routers/tasks.py b/app/routers/tasks.py
+index 415de3c..b23f4d8 100644
+--- a/app/routers/tasks.py
++++ b/app/routers/tasks.py
+@@ -3,7 +3,13 @@ import sqlite3
+ from fastapi import APIRouter, Depends, HTTPException, Query
+ 
+ from app.db import get_db
+-from app.schemas.task import PaginatedTaskResponse, TaskCreate, TaskResponse, TaskUpdate
++from app.schemas.task import (
++    BulkCompleteRequest,
++    PaginatedTaskResponse,
++    TaskCreate,
++    TaskResponse,
++    TaskUpdate,
++)
+ from app.services import task_service
+ 
+ router = APIRouter(prefix="/tasks", tags=["tasks"])
+@@ -20,6 +26,25 @@ def list_tasks(
+     return task_service.get_tasks_paginated(db, page, page_size, status, priority)
+ 
+ 
++@router.get("/by-user/{user_id}", response_model=PaginatedTaskResponse)
++def list_user_tasks(
++    user_id: int,
++    page: int = Query(1, ge=1),
++    page_size: int = Query(20, ge=1, le=100),
++    status: str | None = Query(None),
++    db: sqlite3.Connection = Depends(get_db),
++):
++    return task_service.get_user_tasks(db, user_id, page, page_size, status)
++
++
++@router.post("/bulk-complete")
++def bulk_complete(
++    payload: BulkCompleteRequest, db: sqlite3.Connection = Depends(get_db)
++):
++    changed = task_service.bulk_complete(db, payload.task_ids, payload.user_id)
++    return {"completed": changed}
++
++
+ @router.post("/", response_model=TaskResponse, status_code=201)
+ def create_task(task_data: TaskCreate, db: sqlite3.Connection = Depends(get_db)):
+     return task_service.create_task(db, task_data)
+diff --git a/app/schemas/task.py b/app/schemas/task.py
+index 9a8f3aa..aa49bf6 100644
+--- a/app/schemas/task.py
++++ b/app/schemas/task.py
+@@ -50,3 +50,8 @@ class PaginatedTaskResponse(BaseModel):
+     items: list[TaskResponse]
+     pagination: PaginationMeta
+     stats: TaskStats
++
++
++class BulkCompleteRequest(BaseModel):
++    task_ids: list[int]
++    user_id: int
+diff --git a/app/services/task_service.py b/app/services/task_service.py
+index 9a5fe0c..0d86109 100644
+--- a/app/services/task_service.py
++++ b/app/services/task_service.py
+@@ -101,6 +101,70 @@ def get_tasks_paginated(
+     }
+ 
+ 
++def get_user_tasks(
++    db: sqlite3.Connection,
++    user_id: int,
++    page: int = 1,
++    page_size: int = 20,
++    status: str | None = None,
++):
++    """One user's tasks, paginated, optionally filtered by status."""
++    conditions = ["user_id = ?"]
++    params: list = [user_id]
++    if status == "pending":
++        conditions.append("completed = 0")
++    elif status == "completed":
++        conditions.append("completed = 1")
++
++    where_clause = " WHERE " + " AND ".join(conditions)
++
++    count_row = db.execute(
++        f"SELECT COUNT(*) FROM tasks{where_clause}", params
++    ).fetchone()
++    total = count_row[0]
++    total_pages = max(1, math.ceil(total / page_size))
++
++    offset = page * page_size
++    rows = db.execute(
++        f"SELECT * FROM tasks{where_clause} ORDER BY created_at DESC LIMIT ? OFFSET ?",
++        params + [page_size, offset],
++    ).fetchall()
++
++    return {
++        "items": [_row_to_dict(row) for row in rows],
++        "pagination": {
++            "page": page,
++            "page_size": page_size,
++            "total": total,
++            "total_pages": total_pages,
++            "has_next": page < total_pages,
++            "has_previous": page > 1,
++        },
++        "stats": {"total": total, "pending": 0, "completed": 0},
++    }
++
++
++def bulk_complete(db: sqlite3.Connection, task_ids: list[int], user_id: int) -> int:
++    """Mark several of a user's tasks as completed. Returns how many changed."""
++    if not task_ids:
++        return 0
++
++    placeholders = ",".join("?" for _ in task_ids)
++    now = datetime.now().isoformat()
++
++    try:
++        cursor = db.execute(
++            f"UPDATE tasks SET completed = 1, updated_at = ? WHERE id IN ({placeholders})",
++            [now, *task_ids],
++        )
++        db.commit()
++    except Exception:
++        db.rollback()
++        raise
++
++    return cursor.rowcount
++
++
+ def update_task(db: sqlite3.Connection, task_id, task_data: TaskUpdate):
+     existing = get_task(db, task_id)
+     if not existing:
