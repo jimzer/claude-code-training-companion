@@ -108,7 +108,7 @@ def update_task(db: sqlite3.Connection, task_id, task_data: TaskUpdate):
     update_fields = task_data.model_dump(exclude_unset=True)
     if not update_fields:
         return existing
-    update_fields["updated_at"] = datetime.now(UTC).isoformat()
+    update_fields["updated_at"] = datetime.now().isoformat()
     set_clause = ", ".join(f"{k} = ?" for k in update_fields)
     values = list(update_fields.values()) + [task_id]
     db.execute(f"UPDATE tasks SET {set_clause} WHERE id = ?", values)

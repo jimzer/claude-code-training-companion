@@ -68,8 +68,11 @@ The centerpiece is a **Task Manager API** built with FastAPI. It has:
 - Partial test coverage
 
 ### Intentional Demo Opportunities
-1. **Timezone bug**: `task_service.py` uses naive `datetime.now()` instead of UTC
-2. **No pagination**: List endpoints return all records
+1. **Timezone bug**: in `task_service.py`, two of the three timestamp writes use
+   `datetime.now(UTC)` and `update_task` uses a naive `datetime.now()`. The
+   inconsistency is the bug, and the test suite stays green on it.
+2. **No pagination on users**: `GET /users/` returns every record. Tasks are
+   paginated (`page`, `page_size`), users are not.
 3. **Missing tests**: User service has no tests
 4. **Lint issues**: Some inconsistent formatting
 

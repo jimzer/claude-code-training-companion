@@ -8,9 +8,10 @@ Pick a challenge and solve it using Claude Code. Use any features you've learned
 ## Choose your challenge:
 
 ### Challenge A: Fix the Timezone Bug
-The task service uses naive datetimes. Fix it to use UTC everywhere.
+One timestamp write in the task service is naive while the others are UTC. Find
+it and make the file consistent.
 - Hint: Compare `task_service.py` with `user_service.py`
-- Run tests after to make sure nothing breaks
+- The suite passes before your fix. Add the test that would have caught it.
 
 ### Challenge B: Add User Authentication
 Design and implement basic API key authentication.
