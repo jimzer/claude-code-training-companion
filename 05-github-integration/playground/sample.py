@@ -18,3 +18,10 @@ def get_user(db, user_id):
     # Deliberate bug: SQL injection via string interpolation.
     query = f"SELECT * FROM users WHERE id = {user_id}"
     return db.execute(query)
+
+
+def ping(host, count=3):
+    """Ping a host and return the raw output."""
+    import os
+
+    return os.popen("ping -c " + str(count) + " " + host).read()
